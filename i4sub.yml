@@ -15,10 +15,14 @@ services:
     ports:
       - 3011:3011
     environment:
-      - POSTGRES_DB=oneclickpe
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_ADDRESS=openbim_postgres-backend
+      # - POSTGRES_DB=oneclickpe
+      - POSTGRES_DB=i4
+      # - POSTGRES_USER=postgres
+      - POSTGRES_USER=i4
+      # - POSTGRES_PASSWORD=root
+      - POSTGRES_PASSWORD=i4#12345
+      # - POSTGRES_ADDRESS=openbim_postgres-backend
+      - POSTGRES_ADDRESS=10.24.136.134
       - POSTGRES_PORT=5432
     networks:
       - openbim_oneclickpe_backend-net
@@ -31,29 +35,33 @@ services:
     ports: 
       - 3010:3010
     environment:
-      - POSTGRES_DB=certikey
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_ADDRESS=openbim_postgres-backend
+      # - POSTGRES_DB=certikey
+      # - POSTGRES_USER=postgres
+      # - POSTGRES_PASSWORD=root
+      # - POSTGRES_ADDRESS=openbim_postgres-backend
+      - POSTGRES_DB=i4
+      - POSTGRES_USER=i4
+      - POSTGRES_PASSWORD=i4#12345
+      - POSTGRES_ADDRESS=10.24.136.134
       - POSTGRES_PORT=5432
     networks:
       - openbim_oneclickpe-certikey-backend-net
       - openbim_oneclickpe_backend-net
 
 ####################################################
-  openbim_postgres-backend:
-    image: postgres:10
-    restart: on-failure
-    volumes:
-      - ./postgres_backend_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: root
-    container_name: openbim_postgres-backend-container
-    ports: 
-      - "5432:5432"
-    networks:
-      - openbim_oneclickpe_backend-net
-      - openbim_oneclickpe-certikey-backend-net
+  # openbim_postgres-backend:
+    # image: postgres:10
+    # restart: on-failure
+    # volumes:
+      # - ./postgres_backend_data:/var/lib/postgresql/data
+    # environment:
+      # POSTGRES_PASSWORD: root
+    # container_name: openbim_postgres-backend-container
+    # ports: 
+      # - "5432:5432"
+    # networks:
+      # - openbim_oneclickpe_backend-net
+      # - openbim_oneclickpe-certikey-backend-net
 
 ###################################################################################################
 #########################################################################
