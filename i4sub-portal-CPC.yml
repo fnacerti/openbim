@@ -7,7 +7,7 @@ services:
 #BACKEND
 #########################################################################
   openbim_oneclickpe-backend:
-    image: registry.certi.org.br/cpc-openbim/oneclickpe-backend:1.0
+    image: registry.certi.org.br/cpc-openbim/oneclickpe-backend
     restart: on-failure
     container_name: openbim_oneclickpe-backend-container
     depends_on:
@@ -16,16 +16,16 @@ services:
       - 3011:3011
     environment:
       # - POSTGRES_DB=oneclickpe
-      # - POSTGRES_DB=i4
-      - POSTGRES_DB=certikey
       # - POSTGRES_USER=postgres
-      # - POSTGRES_USER=i4
-      - POSTGRES_USER=postgres
       # - POSTGRES_PASSWORD=root
-      # - POSTGRES_PASSWORD=i4#12345
-      - POSTGRES_PASSWORD=JpKJTyAhVhX238IJ
       # - POSTGRES_ADDRESS=openbim_postgres-backend
+      # - POSTGRES_DB=i4
+      # - POSTGRES_USER=i4
+      # - POSTGRES_PASSWORD=i4#12345
       # - POSTGRES_ADDRESS=10.24.136.134
+      - POSTGRES_DB=certikey
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=JpKJTyAhVhX238IJ
       - POSTGRES_ADDRESS=104.131.173.224
       - POSTGRES_PORT=5432
     networks:
@@ -33,16 +33,24 @@ services:
 
 ###################################################################################################
   openbim_oneclickpe-certikey-backend:
-    image: registry.certi.org.br/cpc-openbim/certikey-backend:1.0
+    image: registry.certi.org.br/cpc-openbim/certikey-backend
     restart: on-failure
     container_name: openbim_certikey-backend-container
     ports: 
       - 3010:3010
     environment:
+      # - POSTGRES_DB=oneclickpe
+      # - POSTGRES_USER=postgres
+      # - POSTGRES_PASSWORD=root
+      # - POSTGRES_ADDRESS=openbim_postgres-backend
+      # - POSTGRES_DB=i4
+      # - POSTGRES_USER=i4
+      # - POSTGRES_PASSWORD=i4#12345
+      # - POSTGRES_ADDRESS=10.24.136.134
       - POSTGRES_DB=certikey
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_ADDRESS=openbim_postgres-backend
+      - POSTGRES_PASSWORD=JpKJTyAhVhX238IJ
+      - POSTGRES_ADDRESS=104.131.173.224
       - POSTGRES_PORT=5432
     networks:
       - openbim_oneclickpe-certikey-backend-net
@@ -68,7 +76,7 @@ services:
 #FRONT
 #########################################################################
   openbim_oneclickpe_frontend:
-    image: registry.certi.org.br/cpc-openbim/oneclickpe-frontend:latest
+    image: registry.certi.org.br/cpc-openbim/oneclickpe-frontend
     restart: on-failure
     container_name: openbim_oneclickpe-frontend-container
     # environment:
