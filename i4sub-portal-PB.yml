@@ -1,0 +1,129 @@
+version: "3.5"
+
+###################################################################################################
+services:
+###################################################################################################
+#########################################################################
+#BACKEND
+#########################################################################
+  openbim_oneclickpe-backend:
+    image: registry.certi.org.br/cpc-openbim/oneclickpe-backend
+    restart: on-failure
+    container_name: openbim_oneclickpe-backend-container
+    depends_on:
+      - openbim_oneclickpe-certikey-backend
+    ports:
+      - 3011:3011
+    environment:
+      # - POSTGRES_DB=oneclickpe
+      - POSTGRES_DB=i4
+      # - POSTGRES_USER=postgres
+      - POSTGRES_USER=i4
+      # - POSTGRES_PASSWORD=root
+      - POSTGRES_PASSWORD=i4#12345
+      # - POSTGRES_ADDRESS=openbim_postgres-backend
+      - POSTGRES_ADDRESS=10.24.136.134
+      - POSTGRES_PORT=5432
+    networks:
+      - openbim_oneclickpe_backend-net
+
+###################################################################################################
+  openbim_oneclickpe-certikey-backend:
+    image: registry.certi.org.br/cpc-openbim/certikey-backend
+    restart: on-failure
+    container_name: openbim_certikey-backend-container
+    ports: 
+      - 3010:3010
+    environment:
+      - POSTGRES_DB=certikey
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_ADDRESS=openbim_postgres-backend
+      - POSTGRES_PORT=5432
+    networks:
+      - openbim_oneclickpe-certikey-backend-net
+      - openbim_oneclickpe_backend-net
+
+####################################################
+  # openbim_postgres-backend:
+    # image: postgres:10
+    # restart: on-failure
+    # volumes:
+      # - ./postgres_backend_data:/var/lib/postgresql/data
+    # environment:
+      # POSTGRES_PASSWORD: root
+    # container_name: openbim_postgres-backend-container
+    # ports: 
+      # - "5432:5432"
+    # networks:
+      # - openbim_oneclickpe_backend-net
+      # - openbim_oneclickpe-certikey-backend-net
+
+###################################################################################################
+#########################################################################
+#FRONT
+#########################################################################
+  openbim_oneclickpe_frontend:
+    image: registry.certi.org.br/cpc-openbim/oneclickpe-frontend
+    restart: on-failure
+    container_name: openbim_oneclickpe-frontend-container
+    # environment:
+      # apiURL: openbim_oneclickpe-certikey-backend/oneclickpe
+    ports:
+      - "8180:80"
+    networks:
+      - openbim_oneclickpe-certikey-backend-net
+      - openbim_camunda-net
+
+###################################################################################################
+#########################################################################
+#CAMUNDA
+#########################################################################
+  # openbim_camunda:
+    # #image: camunda/camunda-bpm-platform:7.13.0
+    # image: camunda/camunda-bpm-platform
+    # restart: on-failure
+    # environment:
+      # - DB_DRIVER=org.postgresql.Driver
+      # - DB_URL=jdbc:postgresql://openbim_postgres-camunda:5432/postgres
+      # - DB_USERNAME=postgres
+      # - DB_PASSWORD=password
+      # - WAIT_FOR=openbim_postgres-camunda:5432
+      # - WAIT_FOR_TIMEOUT:30
+      # - CAMUNDA_POSTGRES_PASSWORD=password
+    # container_name: openbim_camunda
+    # ports:
+      # - "8181:8080"
+    # networks:
+      # - openbim_camunda-net
+      # - openbim_camunda-database-net
+    # depends_on: 
+      # - openbim_postgres-camunda
+# ####################################################
+  # openbim_postgres-camunda:
+    # image: postgres:10
+    # restart: on-failure
+    # volumes:
+      # - ./postgres_camunda_data:/var/lib/postgresql/data
+    # environment:
+      # POSTGRES_PASSWORD: password
+    # container_name: openbim_postgres-camunda
+    # # ports: 
+      # # - "5434:5432"
+    # networks:
+      # - openbim_camunda-database-net
+###################################################################################################
+
+networks:
+  openbim_camunda-net:
+    driver: bridge
+  openbim_camunda-database-net:
+    driver: bridge
+  openbim_oneclickpe_backend-net:
+    driver: bridge
+  openbim_oneclickpe-certikey-backend-net:
+    driver: bridge
+
+volumes:
+  postgres_camunda_data:
+    driver: local
