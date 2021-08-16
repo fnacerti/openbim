@@ -16,13 +16,17 @@ services:
       - 3011:3011
     environment:
       # - POSTGRES_DB=oneclickpe
-      - POSTGRES_DB=i4
+      # - POSTGRES_DB=i4
+      - POSTGRES_DB=certikey
       # - POSTGRES_USER=postgres
-      - POSTGRES_USER=i4
+      # - POSTGRES_USER=i4
+      - POSTGRES_USER=postgres
       # - POSTGRES_PASSWORD=root
-      - POSTGRES_PASSWORD=i4#12345
+      # - POSTGRES_PASSWORD=i4#12345
+      - POSTGRES_PASSWORD=JpKJTyAhVhX238IJ
       # - POSTGRES_ADDRESS=openbim_postgres-backend
-      - POSTGRES_ADDRESS=10.24.136.134
+      # - POSTGRES_ADDRESS=10.24.136.134
+      - POSTGRES_ADDRESS=104.131.173.224
       - POSTGRES_PORT=5432
     networks:
       - openbim_oneclickpe_backend-net
@@ -35,14 +39,10 @@ services:
     ports: 
       - 3010:3010
     environment:
-      # - POSTGRES_DB=certikey
-      # - POSTGRES_USER=postgres
-      # - POSTGRES_PASSWORD=root
-      # - POSTGRES_ADDRESS=openbim_postgres-backend
-      - POSTGRES_DB=i4
-      - POSTGRES_USER=i4
-      - POSTGRES_PASSWORD=i4#12345
-      - POSTGRES_ADDRESS=10.24.136.134
+      - POSTGRES_DB=certikey
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_ADDRESS=openbim_postgres-backend
       - POSTGRES_PORT=5432
     networks:
       - openbim_oneclickpe-certikey-backend-net
