@@ -82,10 +82,30 @@ services:
     # environment:
       # apiURL: openbim_oneclickpe-certikey-backend/oneclickpe
     ports:
-      - "8180:80"
+      - 8180:80
     networks:
       - openbim_oneclickpe-certikey-backend-net
       - openbim_camunda-net
+
+###################################################################################################
+#########################################################################
+Pgadmin
+#########################################################################
+  pgadmin:
+    container_name: openbim_pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL:fna@certi.org.br
+      - PGADMIN_DEFAULT_PASSWORD:admin
+      #- PGADMIN_CONFIG_SERVER_MODE: 'False'
+      - PGADMIN_CONFIG_SERVER_MODE:false
+    volumes:
+       - ./pgadmin:/var/lib/pgadmin
+    ports:
+      - 5050:80
+    #networks:
+      #- postgres
+    restart: unless-stopped
 
 ###################################################################################################
 #########################################################################
