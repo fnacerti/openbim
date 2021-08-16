@@ -19,6 +19,10 @@ services:
       # - POSTGRES_USER=postgres
       # - POSTGRES_PASSWORD=root
       # - POSTGRES_ADDRESS=openbim_postgres-backend
+      # - POSTGRES_DB=certikey
+      # - POSTGRES_USER=postgres
+      # - POSTGRES_PASSWORD=JpKJTyAhVhX238IJ
+      # - POSTGRES_ADDRESS=104.131.173.224
       - POSTGRES_DB=i4
       - POSTGRES_USER=i4
       - POSTGRES_PASSWORD=i4#12345
@@ -39,6 +43,10 @@ services:
       # - POSTGRES_USER=postgres
       # - POSTGRES_PASSWORD=root
       # - POSTGRES_ADDRESS=openbim_postgres-backend
+      # - POSTGRES_DB=certikey
+      # - POSTGRES_USER=postgres
+      # - POSTGRES_PASSWORD=JpKJTyAhVhX238IJ
+      # - POSTGRES_ADDRESS=104.131.173.224
       - POSTGRES_DB=i4
       - POSTGRES_USER=i4
       - POSTGRES_PASSWORD=i4#12345
