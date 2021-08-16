@@ -19,14 +19,14 @@ services:
       # - POSTGRES_USER=postgres
       # - POSTGRES_PASSWORD=root
       # - POSTGRES_ADDRESS=openbim_postgres-backend
-      # - POSTGRES_DB=certikey
-      # - POSTGRES_USER=postgres
-      # - POSTGRES_PASSWORD=JpKJTyAhVhX238IJ
-      # - POSTGRES_ADDRESS=104.131.173.224
-      - POSTGRES_DB=i4
-      - POSTGRES_USER=i4
-      - POSTGRES_PASSWORD=i4#12345
-      - POSTGRES_ADDRESS=10.24.136.134
+      # - POSTGRES_DB=i4
+      # - POSTGRES_USER=i4
+      # - POSTGRES_PASSWORD=i4#12345
+      # - POSTGRES_ADDRESS=10.24.136.134
+      - POSTGRES_DB=certikey
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=JpKJTyAhVhX238IJ
+      - POSTGRES_ADDRESS=104.131.173.224
       - POSTGRES_PORT=5432
     networks:
       - openbim_oneclickpe_backend-net
@@ -43,14 +43,14 @@ services:
       # - POSTGRES_USER=postgres
       # - POSTGRES_PASSWORD=root
       # - POSTGRES_ADDRESS=openbim_postgres-backend
-      # - POSTGRES_DB=certikey
-      # - POSTGRES_USER=postgres
-      # - POSTGRES_PASSWORD=JpKJTyAhVhX238IJ
-      # - POSTGRES_ADDRESS=104.131.173.224
-      - POSTGRES_DB=i4
-      - POSTGRES_USER=i4
-      - POSTGRES_PASSWORD=i4#12345
-      - POSTGRES_ADDRESS=10.24.136.134
+      # - POSTGRES_DB=i4
+      # - POSTGRES_USER=i4
+      # - POSTGRES_PASSWORD=i4#12345
+      # - POSTGRES_ADDRESS=10.24.136.134
+      - POSTGRES_DB=certikey
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=JpKJTyAhVhX238IJ
+      - POSTGRES_ADDRESS=104.131.173.224
       - POSTGRES_PORT=5432
     networks:
       - openbim_oneclickpe-certikey-backend-net
@@ -82,23 +82,21 @@ services:
     # environment:
       # apiURL: openbim_oneclickpe-certikey-backend/oneclickpe
     ports:
-      - 8180:80
+      - "8180:80"
     networks:
       - openbim_oneclickpe-certikey-backend-net
       - openbim_camunda-net
 
 ###################################################################################################
 #########################################################################
-Pgadmin
+#Pgadmin
 #########################################################################
-  pgadmin:
+  openbim_pgadmin:
     container_name: openbim_pgadmin
     image: dpage/pgadmin4
     environment:
-      - PGADMIN_DEFAULT_EMAIL:fna@certi.org.br
-      - PGADMIN_DEFAULT_PASSWORD:admin
-      #- PGADMIN_CONFIG_SERVER_MODE: 'False'
-      - PGADMIN_CONFIG_SERVER_MODE:false
+      - PGADMIN_DEFAULT_EMAIL=fna@certi.org.br
+      - PGADMIN_DEFAULT_PASSWORD=admin
     volumes:
        - ./pgadmin:/var/lib/pgadmin
     ports:
