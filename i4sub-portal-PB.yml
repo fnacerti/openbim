@@ -97,19 +97,19 @@ services:
 #########################################################################
 #Pgadmin
 #########################################################################
-  openbim_pgadmin:
-    container_name: openbim_pgadmin
-    image: dpage/pgadmin4
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=fna@certi.org.br
-      - PGADMIN_DEFAULT_PASSWORD=admin
-    volumes:
-       - ./pgadmin:/var/lib/pgadmin
-    ports:
-      - 5050:80
-    #networks:
-      #- postgres
-    restart: unless-stopped
+#  openbim_pgadmin:
+#    container_name: openbim_pgadmin
+#    image: dpage/pgadmin4
+#    environment:
+#      - PGADMIN_DEFAULT_EMAIL=fna@certi.org.br
+#      - PGADMIN_DEFAULT_PASSWORD=admin
+#    volumes:
+#       - ./pgadmin:/var/lib/pgadmin
+#    ports:
+#      - 5050:80
+#    #networks:
+#      #- postgres
+#    restart: unless-stopped
 
 ###################################################################################################
 #########################################################################
