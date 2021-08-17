@@ -28,7 +28,7 @@ services:
       - POSTGRES_DB=i4
       - POSTGRES_USER=i4
       - POSTGRES_PASSWORD=i4#12345
-      - POSTGRES_ADDRESS=10.24.136.134
+      - POSTGRES_ADDRESS=172.17.0.1
 
       - POSTGRES_PORT=5432
     networks:
@@ -55,7 +55,7 @@ services:
       - POSTGRES_DB=i4
       - POSTGRES_USER=i4
       - POSTGRES_PASSWORD=i4#12345
-      - POSTGRES_ADDRESS=10.24.136.134
+      - POSTGRES_ADDRESS=172.17.0.1
 
       - POSTGRES_PORT=5432
     networks:
