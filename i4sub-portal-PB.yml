@@ -7,7 +7,8 @@ services:
 #BACKEND
 #########################################################################
   openbim_oneclickpe-backend:
-    image: registry.certi.org.br/cpc-openbim/oneclickpe-backend
+    #image: registry.certi.org.br/cpc-openbim/oneclickpe-backend
+    image: e5rq/repository:oneclickpe
     restart: on-failure
     container_name: openbim_oneclickpe-backend-container
     depends_on:
@@ -36,7 +37,8 @@ services:
 
 ###################################################################################################
   openbim_oneclickpe-certikey-backend:
-    image: registry.certi.org.br/cpc-openbim/certikey-backend
+    #image: registry.certi.org.br/cpc-openbim/certikey-backend
+    image: e5rq/repository:certikey
     restart: on-failure
     container_name: openbim_certikey-backend-container
     ports: 
@@ -62,6 +64,20 @@ services:
       - openbim_oneclickpe-certikey-backend-net
       - openbim_oneclickpe_backend-net
 
+###################################################################################################
+  openbim_oneclickpe-certiio:
+    #image: registry.certi.org.br/cpc-openbim/certikey-backend
+    image: e5rq/repository:certiio
+    restart: on-failure
+    container_name: openbim_certiio-container
+    ports: 
+      - 3012:3012
+    volumes:
+      - ./volumes/certiio_storage:/var/www/storage
+    networks:
+      - openbim_oneclickpe-certikey-backend-net
+      - openbim_oneclickpe_backend-net
+
 ####################################################
   # openbim_postgres-backend:
     # image: postgres:10
@@ -82,7 +98,8 @@ services:
 #FRONT
 #########################################################################
   openbim_oneclickpe_frontend:
-    image: registry.certi.org.br/cpc-openbim/oneclickpe-frontend
+    #image: registry.certi.org.br/cpc-openbim/oneclickpe-frontend
+    image: e5rq/repository:frontend
     restart: on-failure
     container_name: openbim_oneclickpe-frontend-container
     # environment:
