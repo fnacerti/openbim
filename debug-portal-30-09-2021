@@ -1,0 +1,2 @@
+ERROR 
+Object { headers: {…}, status: 400, statusText: "Bad Request", url: "http://sub.petrobras.biz:3010/oneclickpe/md", ok: false, name: "HttpErrorResponse", message: "Http failure response for http://sub.petrobras.biz:3010/oneclickpe/md: 400 Bad Request", error: {…} }
