@@ -1,5 +1,21 @@
 version: "3.5"
 
+x-environment:
+  &dbconnection-environment
+    CERTIIO: http://172.17.0.1:3012
+    CERTIKEY: http://172.17.0.1:3010
+    GATEWAY: http://sub.petrobras.biz:3010/oneclickpe/
+    POSTGRES_DB: i4
+    POSTGRES_USER: i4
+    POSTGRES_PASSWORD: i4#12345
+    POSTGRES_ADDRESS: 172.17.0.1
+    POSTGRES_PORT: 5432
+
+
+x-volumes:
+  &volume-certiio
+  - /var/www/storage:./volumes/certiio_storage
+
 ###################################################################################################
 services:
 ###################################################################################################
@@ -15,21 +31,28 @@ services:
       - openbim_oneclickpe-certikey-backend
     ports:
       - 3011:3011
-    environment:
-      # - CERTIIO=http://host.docker.internal:3012
-      # - CERTIKEY=http://host.docker.internal:3010
-      # - CERTIIO=http://openbim_oneclickpe-certiio
-      # - CERTIKEY=http://openbim_oneclickpe-certikey-backend
-      - CERTIIO=http://172.17.0.1:3012
-      - CERTIKEY=http://172.17.0.1:3010
-      - GATEWAY=http://sub.petrobras.biz:3010/oneclickpe/
-      - POSTGRES_DB=i4
-      - POSTGRES_USER=i4
-      - POSTGRES_PASSWORD=i4#12345
-      - POSTGRES_ADDRESS=172.17.0.1
-      - POSTGRES_PORT=5432
+    # environment:
+    #   # - CERTIIO=http://host.docker.internal:3012
+    #   # - CERTIKEY=http://host.docker.internal:3010
+    #   # - CERTIIO=http://openbim_oneclickpe-certiio
+    #   # - CERTIKEY=http://openbim_oneclickpe-certikey-backend
+    #   - CERTIIO=http://172.17.0.1:3012
+    #   - CERTIKEY=http://172.17.0.1:3010
+    #   - GATEWAY=http://sub.petrobras.biz:3010/oneclickpe/
+    #   - POSTGRES_DB=i4
+    #   - POSTGRES_USER=i4
+    #   - POSTGRES_PASSWORD=i4#12345
+    #   - POSTGRES_ADDRESS=172.17.0.1
+    #   - POSTGRES_PORT=5432
+    environment: *dbconnection-environment
+    # estilo docker servidor sub antigo
+    # networks:
+    #   - openbim_oneclickpe-net
+    # servidor sub com podman mudança do rodrigo
     networks:
-      - openbim_oneclickpe-net
+      openbim_oneclickpe-net:
+        aliases:
+          - openbim_oneclickpe-backend
 
 ###################################################################################################
   openbim_oneclickpe-certikey-backend:
@@ -39,14 +62,19 @@ services:
     container_name: openbim_certikey-backend-container
     ports: 
       - 3010:3010
-    environment:
-      - POSTGRES_DB=i4
-      - POSTGRES_USER=i4
-      - POSTGRES_PASSWORD=i4#12345
-      - POSTGRES_ADDRESS=172.17.0.1
-      - POSTGRES_PORT=5432
+    # environment:
+    #   - POSTGRES_DB=i4
+    #   - POSTGRES_USER=i4
+    #   - POSTGRES_PASSWORD=i4#12345
+    #   - POSTGRES_ADDRESS=172.17.0.1
+    #   - POSTGRES_PORT=5432
+    environment: *dbconnection-environment
+    # networks:
+    #   - openbim_oneclickpe-net
     networks:
-      - openbim_oneclickpe-net
+      openbim_oneclickpe-net:
+        aliases:
+          - openbim_oneclickpe-certikey-backend
 
 ###################################################################################################
   openbim_oneclickpe-certiio:
@@ -56,16 +84,23 @@ services:
     container_name: openbim_certiio-container
     ports: 
       - 3012:3012
-    volumes:
-      - ./volumes/certiio_storage:/var/www/storage
-    environment:
-      - POSTGRES_DB=i4
-      - POSTGRES_USER=i4
-      - POSTGRES_PASSWORD=i4#12345
-      - POSTGRES_ADDRESS=172.17.0.1
-      - POSTGRES_PORT=5432
+    #mudança de declaração de volume pra podman
+    # volumes:
+    #   - ./volumes/certiio_storage:/var/www/storage
+    volumes: *volume-certiio
+    # environment:
+    #   - POSTGRES_DB=i4
+    #   - POSTGRES_USER=i4
+    #   - POSTGRES_PASSWORD=i4#12345
+    #   - POSTGRES_ADDRESS=172.17.0.1
+    #   - POSTGRES_PORT=5432
+    environment: *dbconnection-environment
+    # networks:
+    #   - openbim_oneclickpe-net
     networks:
-      - openbim_oneclickpe-net
+      openbim_oneclickpe-net:
+        aliases:
+          - openbim_oneclickpe-certiio
 
 ####################################################
   # openbim_postgres-backend:
@@ -95,9 +130,13 @@ services:
       # apiURL: openbim_oneclickpe-certikey-backend/oneclickpe
     ports:
       - "8180:80"
-    networks:
-      - openbim_oneclickpe-net
+    # networks:
+    #   - openbim_oneclickpe-net
       # - openbim_camunda-net
+    networks:
+      openbim_oneclickpe-net:
+        aliases:
+          - openbim_oneclickpe_frontend
 
 ###################################################################################################
 #########################################################################
@@ -162,8 +201,10 @@ networks:
   # openbim_camunda-database-net:
   #   driver: bridge
   openbim_oneclickpe-net:
-    driver: bridge
+    # retirado driver por causa do podman
+    # driver: bridge
 
 volumes:
   postgres_camunda_data:
-    driver: local
+    # retirado driver por causa do podman
+    # driver: local
