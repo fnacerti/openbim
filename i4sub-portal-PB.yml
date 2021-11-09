@@ -7,8 +7,8 @@ services:
 #BACKEND
 #########################################################################
   openbim_oneclickpe-backend:
-    #image: registry.certi.org.br/cpc-openbim/oneclickpe-backend
-    image: e5rq/repository:oneclickpe
+    image: registry.certi.org.br/cpc-openbim/oneclickpe-backend:latest
+    # image: e5rq/repository:oneclickpe
     restart: on-failure
     container_name: openbim_oneclickpe-backend-container
     depends_on:
@@ -16,67 +16,56 @@ services:
     ports:
       - 3011:3011
     environment:
-      # - POSTGRES_DB=oneclickpe
-      # - POSTGRES_USER=postgres
-      # - POSTGRES_PASSWORD=root
-      # - POSTGRES_ADDRESS=openbim_postgres-backend
-      
-      # - POSTGRES_DB=certikey
-      # - POSTGRES_USER=postgres
-      # - POSTGRES_PASSWORD=JpKJTyAhVhX238IJ
-      # - POSTGRES_ADDRESS=104.131.173.224
-      
+      # - CERTIIO=http://host.docker.internal:3012
+      # - CERTIKEY=http://host.docker.internal:3010
+      # - CERTIIO=http://openbim_oneclickpe-certiio
+      # - CERTIKEY=http://openbim_oneclickpe-certikey-backend
+      - CERTIIO=http://172.17.0.1:3012
+      - CERTIKEY=http://172.17.0.1:3010
+      - GATEWAY=http://sub.petrobras.biz:3010/oneclickpe/
       - POSTGRES_DB=i4
       - POSTGRES_USER=i4
       - POSTGRES_PASSWORD=i4#12345
       - POSTGRES_ADDRESS=172.17.0.1
-
       - POSTGRES_PORT=5432
     networks:
-      - openbim_oneclickpe_backend-net
+      - openbim_oneclickpe-net
 
 ###################################################################################################
   openbim_oneclickpe-certikey-backend:
-    #image: registry.certi.org.br/cpc-openbim/certikey-backend
-    image: e5rq/repository:certikey
+    image: registry.certi.org.br/cpc-openbim/certikey-backend
+    # image: e5rq/repository:certikey
     restart: on-failure
     container_name: openbim_certikey-backend-container
     ports: 
       - 3010:3010
     environment:
-      # - POSTGRES_DB=oneclickpe
-      # - POSTGRES_USER=postgres
-      # - POSTGRES_PASSWORD=root
-      # - POSTGRES_ADDRESS=openbim_postgres-backend
-      
-      # - POSTGRES_DB=certikey
-      # - POSTGRES_USER=postgres
-      # - POSTGRES_PASSWORD=JpKJTyAhVhX238IJ
-      # - POSTGRES_ADDRESS=104.131.173.224
-      
       - POSTGRES_DB=i4
       - POSTGRES_USER=i4
       - POSTGRES_PASSWORD=i4#12345
       - POSTGRES_ADDRESS=172.17.0.1
-
       - POSTGRES_PORT=5432
     networks:
-      - openbim_oneclickpe-certikey-backend-net
-      - openbim_oneclickpe_backend-net
+      - openbim_oneclickpe-net
 
 ###################################################################################################
   openbim_oneclickpe-certiio:
-    #image: registry.certi.org.br/cpc-openbim/certikey-backend
-    image: e5rq/repository:certiio
+    image: registry.certi.org.br/cpc-openbim/certiio-backend
+    # image: e5rq/repository:certiio
     restart: on-failure
     container_name: openbim_certiio-container
     ports: 
       - 3012:3012
     volumes:
       - ./volumes/certiio_storage:/var/www/storage
+    environment:
+      - POSTGRES_DB=i4
+      - POSTGRES_USER=i4
+      - POSTGRES_PASSWORD=i4#12345
+      - POSTGRES_ADDRESS=172.17.0.1
+      - POSTGRES_PORT=5432
     networks:
-      - openbim_oneclickpe-certikey-backend-net
-      - openbim_oneclickpe_backend-net
+      - openbim_oneclickpe-net
 
 ####################################################
   # openbim_postgres-backend:
@@ -98,8 +87,8 @@ services:
 #FRONT
 #########################################################################
   openbim_oneclickpe_frontend:
-    #image: registry.certi.org.br/cpc-openbim/oneclickpe-frontend
-    image: e5rq/repository:frontend
+    image: registry.certi.org.br/cpc-openbim/oneclickpe-frontend
+    # image: e5rq/repository:frontend
     restart: on-failure
     container_name: openbim_oneclickpe-frontend-container
     # environment:
@@ -107,8 +96,8 @@ services:
     ports:
       - "8180:80"
     networks:
-      - openbim_oneclickpe-certikey-backend-net
-      - openbim_camunda-net
+      - openbim_oneclickpe-net
+      # - openbim_camunda-net
 
 ###################################################################################################
 #########################################################################
@@ -168,13 +157,11 @@ services:
 ###################################################################################################
 
 networks:
-  openbim_camunda-net:
-    driver: bridge
-  openbim_camunda-database-net:
-    driver: bridge
-  openbim_oneclickpe_backend-net:
-    driver: bridge
-  openbim_oneclickpe-certikey-backend-net:
+  # openbim_camunda-net:
+  #   driver: bridge
+  # openbim_camunda-database-net:
+  #   driver: bridge
+  openbim_oneclickpe-net:
     driver: bridge
 
 volumes:
