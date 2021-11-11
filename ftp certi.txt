@@ -1,0 +1,7 @@
+ftp certi
+Host: sftp.certi.org.br
+Porta: 2245
+Protocolo: sFTP
+Usuário: certibim
+Senha: crt#t.t45L0
+var\home\certibim\sftp
