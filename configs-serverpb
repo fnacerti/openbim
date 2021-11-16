@@ -1,3 +1,25 @@
+mi00308266
+certi
+certi#123
+
+
+Postgres
+pgadmin:
+sub.petrobras.biz/pgadmin
+login fna@certi.org.br
+pass: 123456
+Configs do pgadmin:
+server:
+10.24.136.134 (pg admin)
+172.17.0.1 (container)
+porta 5432
+user: i4
+role: i4
+password: i4#12345
+db: i4
+
+
+SERVIDOR ANTIGO
 es00006187
 10.24.136.134
 
