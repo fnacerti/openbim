@@ -1,0 +1,12 @@
+Quando der erro de proxy:
+pkill cntlm
+
+(a porta tem que ser a 3129)
+
+(funcionou 16/11/2021)
+cntlm -I -c cntlm.conf -v
+
+cntlm -c cntlm.conf -H
+
+cntlm -I -c cntlm.conf
+

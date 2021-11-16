@@ -1,4 +1,0 @@
-cntlm -c cntlm.conf -H
-
-cntlm -I -c cntlm.conf
-
