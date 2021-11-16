@@ -1,13 +1,16 @@
-version: '3'
+version: '3.5'
+
+x-volumes:
+  &volume-portaineri4sub
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ./volumes/portainer_data:/data
+
 services:
     portainer-i4sub:
         image: portainer/portainer-ce
         restart: unless-stopped
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
-            - ./volumes/portainer_data:/data
+        volumes: *volume-portaineri4sub
         container_name: portainer-i4sub
         ports:
-            # - "443:9000"
-            # - "8001:8000"
-            - "9001:9000"
+            # - "8000:8000"
+            - "9000:9000"
