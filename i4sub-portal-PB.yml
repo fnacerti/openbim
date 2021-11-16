@@ -14,17 +14,22 @@ x-environment:
 
 x-volumes:
   &volume-certiio
-  - /var/www/storage:./volumes/certiio_storage
+    - ./volumes/certiio_storage:/var/www/storage
+
+x-networks:
+  &oneclickpe-network
+    - openbim_oneclickpe-net
+
 
 ###################################################################################################
 services:
 ###################################################################################################
-#########################################################################
-#BACKEND
-#########################################################################
+########################################################################
+#BACKENDDD
+########################################################################
   openbim_oneclickpe-backend:
     image: registry.certi.org.br/cpc-openbim/oneclickpe-backend:latest
-    # image: e5rq/repository:oneclickpe
+    #image: e5rq/repository:oneclickpe
     restart: on-failure
     container_name: openbim_oneclickpe-backend-container
     depends_on:
@@ -57,7 +62,7 @@ services:
 ###################################################################################################
   openbim_oneclickpe-certikey-backend:
     image: registry.certi.org.br/cpc-openbim/certikey-backend
-    # image: e5rq/repository:certikey
+    #image: e5rq/repository:certikey
     restart: on-failure
     container_name: openbim_certikey-backend-container
     ports: 
@@ -79,7 +84,7 @@ services:
 ###################################################################################################
   openbim_oneclickpe-certiio:
     image: registry.certi.org.br/cpc-openbim/certiio-backend
-    # image: e5rq/repository:certiio
+    #image: e5rq/repository:certiio
     restart: on-failure
     container_name: openbim_certiio-container
     ports: 
@@ -97,7 +102,7 @@ services:
     environment: *dbconnection-environment
     # networks:
     #   - openbim_oneclickpe-net
-    networks:
+    networks: 
       openbim_oneclickpe-net:
         aliases:
           - openbim_oneclickpe-certiio
@@ -123,7 +128,7 @@ services:
 #########################################################################
   openbim_oneclickpe_frontend:
     image: registry.certi.org.br/cpc-openbim/oneclickpe-frontend
-    # image: e5rq/repository:frontend
+    #image: e5rq/repository:frontend
     restart: on-failure
     container_name: openbim_oneclickpe-frontend-container
     # environment:
@@ -202,7 +207,7 @@ networks:
   #   driver: bridge
   openbim_oneclickpe-net:
     # retirado driver por causa do podman
-    # driver: bridge
+    driver: bridge
 
 volumes:
   postgres_camunda_data:
