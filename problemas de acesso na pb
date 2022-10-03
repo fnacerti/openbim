@@ -1,0 +1,4 @@
+certi@ev00000897:~/api> docker login registry.certi.org.br
+Username: fna
+Password: 
+Error: authenticating creds for "registry.certi.org.br": pinging container registry registry.certi.org.br: Get "https://registry.certi.org.br/v2/": x509: certificate signed by unknown authority
